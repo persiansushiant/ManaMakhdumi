@@ -1,0 +1,180 @@
+<resources>
+    <string name="app_name">ManaMakhdumi</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string-array name="questions">
+        <item>فاز شیدایی شاد و هیجان انگیز است. پس باقی ماندن فرد در این فاز می تواند اثرات مثبت در زندگی او داشته باشد.  نظر خود را راجع به این جمله بیان کنید</item>
+        <item>افراد مبتلا به اختلال دو قطبی اگر تحت درمان قرار بگیرند خلاقیت خود را از دست می دهند. نظر خود را راجع به این جمله بیان کنید.</item>
+
+        <item><![CDATA[<u>دشواری در تصمیم گیری</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+        <item><![CDATA[<u>عدم تمرکز</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>مشکل حافظه</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>احساس خستگی و کاهش انرژی</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+        <item><![CDATA[<u>تغییر در اشتها</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>احساس غم و ناامیدی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>احساس بی قراری و اضطراب</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>مشکل در به خواب رفتن یا خواب بیش از حد</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+        <item><![CDATA[<u>صحبت کردن بسیار آرام و فراموشی هنگام حرف زدن</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>عدم انگیزه برای حرف زدن</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>عدم علاقه به اکثر فعالیت ها</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>عدم توانایی در کارهای ساده و ابتدایی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>احساس ناامیدی و بی ارزشی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>کاهش نیاز به خواب</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+        <item><![CDATA[<u>پر حرفی</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+        <item><![CDATA[<u>سراسیمگی روانی حرکتی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>خود بزرگ بینی</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+        <item><![CDATA[<u>پرش افکار</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>ولخرجی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>انجام کار های پرخطر و ریسکی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>سریع حرف زدن</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>احساس شدید و طولانی مدت خوشحالی</u> مربوط به کدام فاز اختلال دوقطبی می باشد؟]]></item>
+        <item><![CDATA[<u>انجام کارها بدون خستگی</u> ]]>مربوط به کدام فاز اختلال دوقطبی می باشد؟</item>
+
+
+    </string-array>
+
+
+    <string-array name="answers">
+        <item>موافقم </item>
+        <item>مخالفم  </item>
+        <item>نظری ندارم </item>
+        <item>موافقم </item>
+
+        <item>مخالفم  </item>
+        <item>نظری ندارم </item>
+
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+
+        <item>افسردگی                    </item>
+        <item>شیدایی                     </item>
+        <item>هردو                      </item>
+    </string-array>
+    <string-array name="javab">
+        <item>5</item>
+        <item>6</item>
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+        <item>1</item>
+        <item>3</item>
+        <item>1</item>
+        <item>3</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+        <item>2</item>
+
+    </string-array>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading...</string>
+    <string name="default_progressbar">Default Progressbar:</string>
+
+</resources>

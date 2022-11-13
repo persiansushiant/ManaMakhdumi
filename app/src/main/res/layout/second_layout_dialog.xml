@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
+android:gravity="center_horizontal"
+        android:background="@color/colorAccent"
+        android:textColor="@color/md_black_1000"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="شروع مصرف دارو از چه ساعتی باشد"/>
+
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_marginTop="20dp"
+        android:timePickerMode="spinner"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:tooltipText="تنظیم ساعت"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@color/colorAccent"
+        android:text="تایید"
+        android:textColor="@color/md_black_1000"
+        android:textSize="24dp" />
+
+</LinearLayout>
