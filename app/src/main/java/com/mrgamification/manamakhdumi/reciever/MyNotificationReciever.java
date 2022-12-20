@@ -2,10 +2,6 @@ package com.mrgamification.manamakhdumi.reciever;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +13,8 @@ import android.os.Vibrator;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 
-import com.mrgamification.manamakhdumi.MainActivity;
-import com.mrgamification.manamakhdumi.R;
 import com.mrgamification.manamakhdumi.activity.NotificationActivity;
-import com.mrgamification.manamakhdumi.activity.PopupActivity;
 
 public class MyNotificationReciever  extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.O)

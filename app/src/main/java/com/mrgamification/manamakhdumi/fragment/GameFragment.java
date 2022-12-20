@@ -1,5 +1,7 @@
 package com.mrgamification.manamakhdumi.fragment;
 
+import static com.mrgamification.manamakhdumi.activity.BaseActivity.AddUp;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -17,10 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.core.text.HtmlCompat;
-
 import com.google.android.material.radiobutton.MaterialRadioButton;
-import com.mrgamification.manamakhdumi.MainActivity;
+import com.mrgamification.manamakhdumi.activity.MainActivity;
 import com.mrgamification.manamakhdumi.R;
 import com.mrgamification.manamakhdumi.model.Question;
 import com.mrgamification.manamakhdumi.sweetalertdialog.SweetAlertDialog;
@@ -65,6 +65,7 @@ public class GameFragment extends BaseFragment {
         ShuffleQuestions();
         setOnclickListener();
         FillData();
+//        ((MainActivity)getActivity()).DoManaWorker(getActivity(),"کاربر وارد تب بازی  شد","enterDgameTab");
 
         return v;
     }
@@ -118,41 +119,51 @@ public class GameFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (myArr.get(currentItem).getAnswer() == 5) {
+                    SweetAlertDialog mySweetAlertDialog = null;
 
                     if (getCorrectAnswer(group.getCheckedRadioButtonId()) == 1) {
-                        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE).setTitleText("اشتباه").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که معمولاً انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.").show();
-                        itsOkGoToNextQuestion();
+                        mySweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE).setTitleText("اشتباه").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که در وضعیت روحی مناسب انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.");
                     } else if (getCorrectAnswer(group.getCheckedRadioButtonId()) == 2) {
-                        new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("موفقیت").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که معمولاً انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.").show();
-                        itsOkGoToNextQuestion();
+                        mySweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.SUCCESS_TYPE).setTitleText("موفقیت").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که در وضعیت روحی مناسب انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.");
                     } else if (getCorrectAnswer(group.getCheckedRadioButtonId()) == 3) {
-                        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE).setTitleText(" ").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که معمولاً انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.").show();
-                        itsOkGoToNextQuestion();
+                        mySweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE).setTitleText(" ").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که در وضعیت روحی مناسب انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.");
                     }
-                    new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که معمولاً انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.").show();
-                    itsOkGoToNextQuestion();
+
+                    mySweetAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            itsOkGoToNextQuestion();
+
+                        }
+                    });
+                    mySweetAlertDialog.show();
+
+//                    new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("گرچه ممکن است افزایش انرژی در فازشیدایی برای فرد جذاب باشد  اما می تواند باعث تحریک پذیری سریع، رفتارهای غیرقابل پیش بینی، پذیرش ریسک های غیرمعمول و انجام کارهایی که در وضعیت روحی مناسب انجام نمی\u200Cدهند شود که گاه عواقبی را برجای می\u200Cگذارد که ممکن است ماه\u200Cها یا سال\u200Cها درگیر اثرات آن باشند.").show();
+//                    itsOkGoToNextQuestion();
 
                 } else if (myArr.get(currentItem).getAnswer() == 6) {
-
+                    SweetAlertDialog mySweetAlertDialog = null;
                     if (getCorrectAnswer(group.getCheckedRadioButtonId()) == 1) {
-                        new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("درمان این بیماری ٫ اغلب به افراد این امکان را می دهد که واضح تر فکر کنند و عملکرد آن ها را بهبود می بخشد. \n" +
+                        mySweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("درمان این بیماری ٫ اغلب به افراد این امکان را می دهد که واضح تر فکر کنند و عملکرد آن ها را بهبود می بخشد. \n" +
                                 "بخشی از صحبت ها ی یک نویسنده نامزد جایزه پولیتزر:\n" +
-                                "وقتی روی کتاب دومم کار می کردم  و حدود ۳۰۰۰ صفحه از آن را نوشته بودم، متوجه شدم بدترین کتابی که میتوانید تصور کنید را نوشتم و حس کردم قادر به اتمامش نیستم. در همین زمان بود که  تشخیص داده شد مبتلا به اختلال دو قطبی هستم فکر کردم که دیگر نمی توانم بنویسم ولی هنگامی که تحت درمان قرار گرفتم توانستم خلاقیتم را به طور موثر هدایت کنم و تمرکزم را بیشتر کنم. و الان مشغول نوشتم هفتمین کتابم هستم.\n").show();
-                        itsOkGoToNextQuestion();
+                                "وقتی روی کتاب دومم کار می کردم  و حدود ۳۰۰۰ صفحه از آن را نوشته بودم، متوجه شدم بدترین کتابی که میتوانید تصور کنید را نوشتم و حس کردم قادر به اتمامش نیستم. در همین زمان بود که  تشخیص داده شد مبتلا به اختلال دو قطبی هستم فکر کردم که دیگر نمی توانم بنویسم ولی هنگامی که تحت درمان قرار گرفتم توانستم خلاقیتم را به طور موثر هدایت کنم و تمرکزم را بیشتر کنم. و الان مشغول نوشتم هفتمین کتابم هستم.\n");
                     } else if (getCorrectAnswer(group.getCheckedRadioButtonId()) == 2) {
-                        new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("درمان این بیماری ٫ اغلب به افراد این امکان را می دهد که واضح تر فکر کنند و عملکرد آن ها را بهبود می بخشد. \n" +
+                        mySweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("درمان این بیماری ٫ اغلب به افراد این امکان را می دهد که واضح تر فکر کنند و عملکرد آن ها را بهبود می بخشد. \n" +
                                 "بخشی از صحبت ها ی یک نویسنده نامزد جایزه پولیتزر:\n" +
-                                "وقتی روی کتاب دومم کار می کردم  و حدود ۳۰۰۰ صفحه از آن را نوشته بودم، متوجه شدم بدترین کتابی که میتوانید تصور کنید را نوشتم و حس کردم قادر به اتمامش نیستم. در همین زمان بود که  تشخیص داده شد مبتلا به اختلال دو قطبی هستم فکر کردم که دیگر نمی توانم بنویسم ولی هنگامی که تحت درمان قرار گرفتم توانستم خلاقیتم را به طور موثر هدایت کنم و تمرکزم را بیشتر کنم. و الان مشغول نوشتم هفتمین کتابم هستم.\n").show();
-                        itsOkGoToNextQuestion();
+                                "وقتی روی کتاب دومم کار می کردم  و حدود ۳۰۰۰ صفحه از آن را نوشته بودم، متوجه شدم بدترین کتابی که میتوانید تصور کنید را نوشتم و حس کردم قادر به اتمامش نیستم. در همین زمان بود که  تشخیص داده شد مبتلا به اختلال دو قطبی هستم فکر کردم که دیگر نمی توانم بنویسم ولی هنگامی که تحت درمان قرار گرفتم توانستم خلاقیتم را به طور موثر هدایت کنم و تمرکزم را بیشتر کنم. و الان مشغول نوشتم هفتمین کتابم هستم.\n");
                     } else if (getCorrectAnswer(group.getCheckedRadioButtonId()) == 3) {
-                        new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("درمان این بیماری ٫ اغلب به افراد این امکان را می دهد که واضح تر فکر کنند و عملکرد آن ها را بهبود می بخشد. \n" +
+                        mySweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE).setTitleText("با تشکر از نظر شما").setConfirmText("باشه").setContentText("درمان این بیماری ٫ اغلب به افراد این امکان را می دهد که واضح تر فکر کنند و عملکرد آن ها را بهبود می بخشد. \n" +
                                 "بخشی از صحبت ها ی یک نویسنده نامزد جایزه پولیتزر:\n" +
-                                "وقتی روی کتاب دومم کار می کردم  و حدود ۳۰۰۰ صفحه از آن را نوشته بودم، متوجه شدم بدترین کتابی که میتوانید تصور کنید را نوشتم و حس کردم قادر به اتمامش نیستم. در همین زمان بود که  تشخیص داده شد مبتلا به اختلال دو قطبی هستم فکر کردم که دیگر نمی توانم بنویسم ولی هنگامی که تحت درمان قرار گرفتم توانستم خلاقیتم را به طور موثر هدایت کنم و تمرکزم را بیشتر کنم. و الان مشغول نوشتم هفتمین کتابم هستم.\n").show();
-                        itsOkGoToNextQuestion();
+                                "وقتی روی کتاب دومم کار می کردم  و حدود ۳۰۰۰ صفحه از آن را نوشته بودم، متوجه شدم بدترین کتابی که میتوانید تصور کنید را نوشتم و حس کردم قادر به اتمامش نیستم. در همین زمان بود که  تشخیص داده شد مبتلا به اختلال دو قطبی هستم فکر کردم که دیگر نمی توانم بنویسم ولی هنگامی که تحت درمان قرار گرفتم توانستم خلاقیتم را به طور موثر هدایت کنم و تمرکزم را بیشتر کنم. و الان مشغول نوشتم هفتمین کتابم هستم.\n");
                     }
+                    mySweetAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                            itsOkGoToNextQuestion();
 
-
-
+                        }
+                    });
+                    mySweetAlertDialog.show();
 
                 } else if (getCorrectAnswer(group.getCheckedRadioButtonId()) == myArr.get(currentItem).getAnswer()) {
                     //its ok goto next question
@@ -197,6 +208,7 @@ public class GameFragment extends BaseFragment {
                 @Override
                 public void onClick(SweetAlertDialog sweetAlertDialog) {
                     startActivity(new Intent(getActivity(), MainActivity.class));
+                    AddUp(getActivity(), "quiz");
                     getActivity().finish();
                 }
             });

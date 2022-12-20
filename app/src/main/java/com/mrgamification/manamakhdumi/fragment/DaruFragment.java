@@ -1,12 +1,18 @@
 package com.mrgamification.manamakhdumi.fragment;
 
+import static android.content.Context.ACTIVITY_SERVICE;
 import static android.content.Context.ALARM_SERVICE;
 
+import static com.mrgamification.manamakhdumi.activity.BaseActivity.PrettifyMyTIme;
+import static com.mrgamification.manamakhdumi.activity.BaseActivity.getManaUser;
+import static com.mrgamification.manamakhdumi.activity.BaseActivity.setAlarmForMe;
 import static com.mrgamification.manamakhdumi.application.MyApplication.delay;
 
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +26,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,10 +34,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mrgamification.manamakhdumi.R;
+import com.mrgamification.manamakhdumi.activity.BaseActivity;
+import com.mrgamification.manamakhdumi.activity.MainActivity;
 import com.mrgamification.manamakhdumi.adapter.DaruAdapter;
 import com.mrgamification.manamakhdumi.model.DaruItem;
+import com.mrgamification.manamakhdumi.model.DefferedMana;
 import com.mrgamification.manamakhdumi.model.Question;
+import com.mrgamification.manamakhdumi.model.faramushi;
 import com.mrgamification.manamakhdumi.reciever.AlarmReceiver;
+import com.mrgamification.manamakhdumi.reciever.MyService;
+import com.mrgamification.manamakhdumi.service.ForegroundService;
 import com.mrgamification.manamakhdumi.sweetalertdialog.SweetAlertDialog;
 
 import java.util.ArrayList;
@@ -72,7 +85,7 @@ public class DaruFragment extends BaseFragment {
         ClickListeners();
         RefreshList();
         showList();
-
+//        ((MainActivity) getActivity()).DoManaWorker(getActivity(), "کاربر وارد تب دارو  شد", "enterDaruTab");
         return v;
     }
 
@@ -112,6 +125,7 @@ public class DaruFragment extends BaseFragment {
 
     }
 
+
     private void ClickListeners() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,26 +148,21 @@ public class DaruFragment extends BaseFragment {
                     public void onClick(View view) {
 
                         if (EveryThingIsOk()) {
-
-
                             dialog.dismiss();
-
                             Dialog dialog = new Dialog(getActivity());
                             dialog.setContentView(R.layout.second_layout_dialog);
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.setCancelable(true);
                             dialog.getWindow().getAttributes().windowAnimations = R.style.animation;
-
                             Button btn;
                             timePicker = (TimePicker) dialog.findViewById(R.id.timePicker);
                             btn = (Button) dialog.findViewById(R.id.btn);
                             btn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-
-
+                                    startService();
                                     ravesheSabegh(dialog);
-//                                    ravesheJadid();
+
                                     dialog.dismiss();
                                 }
                             });
@@ -161,8 +170,8 @@ public class DaruFragment extends BaseFragment {
 
 
                         } else {
+                            dialog.dismiss();
                             alarmManager.cancel(pendingIntent);
-                            Toast.makeText(getActivity(), "ALARM OFF", Toast.LENGTH_SHORT).show();
 
                         }
                         dialog.dismiss();
@@ -179,31 +188,10 @@ public class DaruFragment extends BaseFragment {
         });
     }
 
-    private void ravesheJadid() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-        Intent i = new Intent(AlarmClock.ACTION_SET_ALARM);
-
-        i.putExtra(AlarmClock.EXTRA_VIBRATE, true);
-        i.putExtra(AlarmClock.EXTRA_HOUR, timePicker.getCurrentHour());
-        i.putExtra(AlarmClock.EXTRA_MINUTES, timePicker.getCurrentMinute());
-        startActivity(i);
-        long time = (calendar.getTimeInMillis() - (calendar.getTimeInMillis() % 60000));
-        if (System.currentTimeMillis() > time) {
-            // setting time as AM and PM
-            if (calendar.AM_PM == 0)
-                time = time + (1000 * 60 * 60 * 12);
-            else
-                time = time + (1000 * 60 * 60 * 24);
-        }
-        Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-        DaruItem daruItem = new DaruItem(drugName.getText().toString(), drugDuration.getText().toString(), time + "", 1);
-        myArr.add(daruItem);
-        daruItem.save();
-        RefreshList();
-
-
+    public void startService() {
+        Intent serviceIntent = new Intent(getActivity(), ForegroundService.class);
+        serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android");
+        ContextCompat.startForegroundService(getActivity(), serviceIntent);
     }
 
     private void ravesheSabegh(Dialog dialog) {
@@ -211,7 +199,6 @@ public class DaruFragment extends BaseFragment {
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
             calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-//                                    long time = calendar.getTimeInMillis();
             long time = (calendar.getTimeInMillis() - (calendar.getTimeInMillis() % 60000));
             if (System.currentTimeMillis() > time) {
                 // setting time as AM and PM
@@ -223,14 +210,13 @@ public class DaruFragment extends BaseFragment {
             DaruItem daruItem = new DaruItem(drugName.getText().toString(), drugDuration.getText().toString(), time + "", 1);
             myArr.add(daruItem);
             daruItem.save();
-            RefreshList();
-            Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-            intent.putExtra("whatID", daruItem.getId() + "");
+            ((MainActivity) getActivity()).DoManaWorker(getActivity(), "داروی " + daruItem.getDaruName() + " هر" + daruItem.getDaruLenght() + " ساعت اضاف شد"+"اولین الارم در ساعت"+PrettifyMyTIme(daruItem.getNextStop()+"")
+                    , "addDaru");
 
-            pendingIntent = PendingIntent.getBroadcast(getActivity(),
-                    daruItem.getId().intValue(), intent, PendingIntent.FLAG_IMMUTABLE);
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, time,
-                    1000 * 60 * delay, pendingIntent);
+
+            RefreshList();
+            setAlarmForMe(getActivity(), daruItem);
+
             dialog.dismiss();
 
         } catch (Exception e) {

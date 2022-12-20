@@ -9,7 +9,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.mrgamification.manamakhdumi.R;
+import com.mrgamification.manamakhdumi.activity.MainActivity;
+import com.mrgamification.manamakhdumi.activity.PopupActivity;
 import com.mrgamification.manamakhdumi.model.DaruItem;
+import com.mrgamification.manamakhdumi.model.DefferedMana;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,9 +42,10 @@ public class AvatarFragment extends BaseFragment {
         img = (ImageView) v.findViewById(R.id.img);
         getData();
         SetState();
-
+//        ((MainActivity)getActivity()).DoManaWorker(getActivity(),"کاربر وارد تب آواتار  شد","enterAvatar");
         return v;
     }
+
 
     private void SetState() {
 

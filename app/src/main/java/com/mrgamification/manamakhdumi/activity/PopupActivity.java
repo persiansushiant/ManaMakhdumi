@@ -4,10 +4,8 @@ import static com.mrgamification.manamakhdumi.application.MyApplication.delay;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -22,17 +20,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.bumptech.glide.Glide;
-import com.mrgamification.manamakhdumi.BaseActivity;
 import com.mrgamification.manamakhdumi.R;
-import com.mrgamification.manamakhdumi.application.MyApplication;
 import com.mrgamification.manamakhdumi.model.DaruItem;
+import com.mrgamification.manamakhdumi.model.DefferedMana;
+import com.mrgamification.manamakhdumi.model.Note;
 import com.mrgamification.manamakhdumi.model.faramushi;
 import com.mrgamification.manamakhdumi.reciever.AlarmReceiver;
+import com.mrgamification.manamakhdumi.service.ForegroundService;
 import com.mrgamification.manamakhdumi.sweetalertdialog.SweetAlertDialog;
+
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class PopupActivity extends BaseActivity {
     ImageView img;
@@ -65,54 +67,54 @@ public class PopupActivity extends BaseActivity {
             SetMusicPlayer();
             SetHandler();
             deleteNotificationBar();
+//            DoManaWorker(PopupActivity.this,"کاربر وارد صفحه دیالوگ  شد","enterPopUp");
 
         } catch (Exception e) {
             new SweetAlertDialog(PopupActivity.this, SweetAlertDialog.WARNING_TYPE).setTitleText(id).setContentText(e.getMessage()).show();
         }
     }
-    private void deleteNotificationBar() {
 
+
+
+    private void deleteNotificationBar() {
+//        StopMyService(PopupActivity.this);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(PopupActivity.this);
 
-        notificationManager.deleteNotificationChannel(daru.getId() + "");
-        notificationManager.cancel(daru.getId().intValue());
+        notificationManager.deleteNotificationChannel(GenerateCode(daru.getId().intValue(),status)  + "");
+        notificationManager.cancel(GenerateCode(daru.getId().intValue(),status) );
+//        StartMyService(PopupActivity.this);
 
     }
+
     private void SetHandler() {
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //Do something after delay
-                if (status==5) {
-//                    daru.setStatus(5);
-//                    DaruItem.saveInTx(daru);
-                    deleteAlarm();
-
-                    SendSmSToMana();
-
-
-                }
-                r.stop();
-                finish();
-            }
-        }, 180000);
+//                        if (Build.VERSION.SDK_INT <30) {
+//
+//        final Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (status == 5) {
+//                    cancelAlarmForMe(PopupActivity.this, daru);
+//                    SendSMS("بیمار در مصرف داروی "
+//                            + daru.getDaruName() + " خود غفلت کرده.");
+//                }
+//                r.stop();
+//                finish();
+//            }
+//        }, 180000);
+//    }
     }
 
 
     private void SetMusicPlayer() {
         try {
+            Uri notification =Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.song);
 
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             r = RingtoneManager.getRingtone(getApplicationContext(), notification);
             r.play();
-
-
         } catch (Exception e) {
             Log.wtf("problem", e.getMessage());
-
         }
-
     }
 
     private void SetTextForTV() {
@@ -123,78 +125,105 @@ public class PopupActivity extends BaseActivity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                deleteOldNotification();
                 r.stop();
                 daru.setStatus(1);
                 int length = Integer.parseInt(daru.getDaruLenght());
-                long time = Long.parseLong(daru.getNextStop()) + length *60* 60*1000;
+                long time = Long.parseLong(daru.getNextStop()) + length * 60 * 60 * 1000;
                 daru.setNextStop(time + "");
                 DaruItem.saveInTx(daru);
-                setAlarmForMe(daru);
+                setAlarmForMe(PopupActivity.this, daru);
+                CheckFOrPasmande();
+                DoManaWorker(PopupActivity.this,"کاربر قرص رو زد خورده"+daru.getDaruName()+"بار "+(daru.getStatus()-1),"usedDrug");
 
-
-                finish();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int negStatus = Integer.parseInt(status);
-//                negStatus++;
-//                daru.setStatus(negStatus);
-////                daru.setStatus(daru.getStatus() + 1);
-////                long time = System.currentTimeMillis() + 1000 * 60 * 10;
-////                daru.setNextStop(time + "");
-////
-//                DaruItem.saveInTx(daru);
-                if (status==5) {
-//                    daru.setStatus(5);
-//                    DaruItem.saveInTx(daru);
-
-                    deleteAlarm();
-
-                    SendSmSToMana();
-                    faramushi faramushi=new faramushi(daru.getId().intValue(),Long.parseLong(daru.getNextStop())+"");
-                    faramushi.save();
-                    PendingIntent pendingIntent;
-                    long nexttime=Long.parseLong(daru.getNextStop())+Integer.parseInt(daru.getDaruLenght())*60*60*1000;
-                    daru.setNextStop(nexttime +"");
-                    DaruItem.saveInTx(daru);
-                    Intent intentz = new Intent(PopupActivity.this, AlarmReceiver.class);
-                    intentz.putExtra("whatID", daru.getId() + "");
-                    intentz.putExtra("status", "1");
-                    pendingIntent = PendingIntent.getBroadcast(PopupActivity.this,
-                            daru.getId().intValue(), intentz, PendingIntent.FLAG_IMMUTABLE);
-                    alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Integer.parseInt(daru.getNextStop()),
-                            1000 * 60 * delay, pendingIntent);
-                }
-//                deleteOldNotification();
                 r.stop();
-                finish();
-            }
+                CheckFOrPasmande();
+                DoManaWorker(PopupActivity.this,"کاربر  زد یاداوری"+daru.getDaruName()+"بار "+(daru.getStatus()-1),"dismissed");
 
+                if (status == 5) {
+                    cancelAlarmForMe(PopupActivity.this, daru);
+                    SendSMS("بیمار در مصرف داروی "
+                            + daru.getDaruName() + " خود غفلت کرده.");
+                    CreateFaramushiForLaterInformation(daru);
+
+                    long nexttime = Long.parseLong(daru.getNextStop()) + Integer.parseInt(daru.getDaruLenght()) * 60 * 60 * 1000;
+                    daru.setNextStop(nexttime + "");
+                    DaruItem.saveInTx(daru);
+                    setAlarmForMe(PopupActivity.this, daru);
+                }
+
+
+            }
         });
     }
 
-    private void deleteAlarm() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(PopupActivity.this, AlarmReceiver.class);
-        intent.putExtra("whatID", daru.getId() + "");
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(PopupActivity.this,
-                daru.getId().intValue(), intent, PendingIntent.FLAG_IMMUTABLE);
-        alarmManager.cancel(pendingIntent);
+    private void CheckFOrPasmande() {
+        List<faramushi> myList = faramushi.find(faramushi.class, "daru_item = ?", daru.getId() + "");
+        Log.wtf("tedad", myList.size() + "");
+        if (myList.size() == 0) {
+            finish();
+        } else {
+            for (faramushi faramushi : myList) {
+                SweetAlertDialog mySweeti = new SweetAlertDialog(PopupActivity.this, SweetAlertDialog.WARNING_TYPE);
+                mySweeti.setTitleText("داروی قبل خود را چه کردید؟");
+                mySweeti.setContentText(getContentTextForFaramushi(faramushi, daru));
+                mySweeti.setConfirmText("کردم");
+                mySweeti.setCancelText("نکردم");
+                mySweeti.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        DoManaWorker(PopupActivity.this,"کاربر قرص فراموشی رو زد نخورده"+daru.getDaruName(),"usedpastFrug");
+
+                        faramushi.delete();
+                        CheckTedadPasmande(mySweeti);
+                        mySweeti.dismissWithAnimation();
+                    }
+                });
+                mySweeti.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        DoManaWorker(PopupActivity.this,"کاربر قرص فراموشی رو زد خورده"+daru.getDaruName(),"usedpastFrug");
+
+                        faramushi.delete();
+                        CheckTedadPasmande(mySweeti);
+                        mySweeti.dismissWithAnimation();
+
+
+
+                    }
+                });
+                mySweeti.show();
+            }
+
+        }
     }
 
-    private void SendSmSToMana() {
-        SendSMS("بیمار در مصرف داروی " + daru.getDaruName() + " خود غفلت کرده.");
+    private void CheckTedadPasmande(SweetAlertDialog sweetAlertDialog) {
+        List<faramushi> myList = faramushi.find(faramushi.class, "daru_item = ?", daru.getId() + "");
+        Log.wtf("tedad bade hazf", myList.size() + "");
+        if (myList.size() == 0) {
+            sweetAlertDialog.dismiss();
+            finish();
+        }
     }
+
+    private String getContentTextForFaramushi(faramushi faramushi, DaruItem daru) {
+        long ekhtelaf = System.currentTimeMillis() - Long.parseLong(faramushi.getTime());
+        long hour = TimeUnit.MILLISECONDS.toHours(ekhtelaf);
+        String g = "شما باید داروی" + daru.getDaruName() + "خود را " + hour + " ساعت " + "  پیش مصرف میکردید، نهایتا مصرف کردید؟";
+        return g;
+    }
+
 
     private void GetDaru() {
         id = getIntent().getStringExtra("whatID");
         Log.wtf("whatID id in popup", id);
-
         daru = DaruItem.findById(DaruItem.class, Long.parseLong(id));
-        status=daru.getStatus();
+        status = daru.getStatus();
     }
 
     private void GetViews() {
@@ -204,53 +233,25 @@ public class PopupActivity extends BaseActivity {
         tv = (TextView) findViewById(R.id.tv);
     }
 
-    private void deleteOldNotification() {
-            Intent intent = new Intent(PopupActivity.this, AlarmReceiver.class);
-
-            intent.putExtra("whatID", daru.getId() + "");
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(PopupActivity.this, daru.getId().intValue(), intent, PendingIntent.FLAG_IMMUTABLE);
-                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
-
-
-
-
-
-    }
-
-
-
     private void SetGif() {
-        switch (status+"") {
+        switch (status + "") {
             case "2":
                 Glide.with(this).load(R.raw.happy).into(img);
-
                 break;
-
-
             case "3":
                 Glide.with(this).load(R.raw.sad).into(img);
-
                 break;
-
             case "4":
                 Glide.with(this).load(R.raw.angry).into(img);
-
                 break;
-
             case "5":
                 Glide.with(this).load(R.raw.anxiety).into(img);
-
                 break;
             default:
                 Glide.with(this).load(R.raw.anxiety).into(img);
-
                 break;
         }
-
-
     }
-
 
 
 }

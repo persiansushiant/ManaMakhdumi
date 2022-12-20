@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.mrgamification.manamakhdumi.BaseActivity;
-import com.mrgamification.manamakhdumi.MainActivity;
 import com.mrgamification.manamakhdumi.R;
 import com.ramotion.paperonboarding.PaperOnboardingFragment;
 import com.ramotion.paperonboarding.PaperOnboardingPage;

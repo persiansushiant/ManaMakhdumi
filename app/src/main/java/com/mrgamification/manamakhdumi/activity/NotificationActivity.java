@@ -1,7 +1,5 @@
 package com.mrgamification.manamakhdumi.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -9,7 +7,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.mrgamification.manamakhdumi.BaseActivity;
 import com.mrgamification.manamakhdumi.R;
 
 public class NotificationActivity extends BaseActivity {
