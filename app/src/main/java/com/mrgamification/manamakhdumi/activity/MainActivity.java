@@ -32,6 +32,7 @@ import com.mrgamification.manamakhdumi.R;
 import com.mrgamification.manamakhdumi.fragment.AvatarFragment;
 import com.mrgamification.manamakhdumi.fragment.BadgeFragment;
 import com.mrgamification.manamakhdumi.fragment.DaruFragment;
+import com.mrgamification.manamakhdumi.fragment.FatemeFragment;
 import com.mrgamification.manamakhdumi.fragment.GameFragment;
 import com.mrgamification.manamakhdumi.fragment.NoteFragment;
 import com.mrgamification.manamakhdumi.model.DefferedMana;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     GameFragment gameFragment;
     AvatarFragment avatarFragment;
     NoteFragment noteFragment;
+    FatemeFragment fatemeFragment;
 //    BadgeFragment badgeFragment;
     Boolean isFirstPage = true;
     Boolean isExitable = false;
@@ -158,6 +160,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         avatarFragment = AvatarFragment.newInstance();
         noteFragment= NoteFragment.newInstance();
 //        badgeFragment=BadgeFragment.newInstance();
+        fatemeFragment=FatemeFragment.newInstance();
     }
 
     private void getViews() {
@@ -241,7 +244,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_game: {
 //                resetIcons();
                 Glide.with(this).load(R.drawable.contacts).transition(withCrossFade()).into(img_game);
-                showFragment(gameFragment);
+                showFragment(fatemeFragment);
             }
             break;
             case R.id.btn_daru: {
