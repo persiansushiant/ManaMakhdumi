@@ -35,6 +35,7 @@ import com.mrgamification.manamakhdumi.fragment.DaruFragment;
 import com.mrgamification.manamakhdumi.fragment.FatemeFragment;
 import com.mrgamification.manamakhdumi.fragment.GameFragment;
 import com.mrgamification.manamakhdumi.fragment.NoteFragment;
+import com.mrgamification.manamakhdumi.fragment.chooseItemFragment;
 import com.mrgamification.manamakhdumi.model.DefferedMana;
 
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     AvatarFragment avatarFragment;
     NoteFragment noteFragment;
     FatemeFragment fatemeFragment;
+    com.mrgamification.manamakhdumi.fragment.chooseItemFragment chooseItemFragment;
 //    BadgeFragment badgeFragment;
     Boolean isFirstPage = true;
     Boolean isExitable = false;
@@ -161,6 +163,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         noteFragment= NoteFragment.newInstance();
 //        badgeFragment=BadgeFragment.newInstance();
         fatemeFragment=FatemeFragment.newInstance();
+//        chooseItemFragment=chooseItemFragment.newInstance();
     }
 
     private void getViews() {

@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentManager;
+
 import com.bumptech.glide.Glide;
 import com.mrgamification.manamakhdumi.R;
+import com.mrgamification.manamakhdumi.activity.MainActivity;
 import com.mrgamification.manamakhdumi.model.DaruItem;
 import com.mrgamification.manamakhdumi.sweetalertdialog.SweetAlertDialog;
 import com.mrgamification.manamakhdumi.textdrawable.TextDrawable;
@@ -28,6 +31,7 @@ public class FatemeFragment extends BaseFragment implements View.OnClickListener
     ImageView t1, t2, t3, t4, t5, t6, t7, t8;
     TextView javab;
     Button checkButton;
+    ArrayList<String> myStrings = new ArrayList<>();
     ArrayList<String> myArr = new ArrayList<>();
     HashMap<Integer, String> hmap = new HashMap<Integer, String>();
 
@@ -50,125 +54,121 @@ public class FatemeFragment extends BaseFragment implements View.OnClickListener
         View v = inflater.inflate(R.layout.fragment_fateme, container, false);
         findViews(v);
         FirstDataInserted();
-        FillArray(myArr.get(0));
+        FillArray(myStrings.get(0));
         FillTextViews();
-        SetButtonOnclick();
-        Log.wtf("check", myArr.get(0) + myArr.get(1) + "");
 
 //        ((MainActivity)getActivity()).DoManaWorker(getActivity(),"کاربر وارد تب آواتار  شد","enterAvatar");
         return v;
     }
 
-    private void SetButtonOnclick() {
-        checkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(myArr.get(0).equalsIgnoreCase(javab.getText().toString())){
 
-                }else if(javab.getText().toString().length()==0){
-                }else{
-
-                }
-            }
-        });
+    private void MakeEveryThingVIsible() {
+        t1.setVisibility(View.VISIBLE);
+        t2.setVisibility(View.VISIBLE);
+        t3.setVisibility(View.VISIBLE);
+        t4.setVisibility(View.VISIBLE);
+        t5.setVisibility(View.VISIBLE);
+        t6.setVisibility(View.VISIBLE);
+        t7.setVisibility(View.VISIBLE);
+        t8.setVisibility(View.VISIBLE);
     }
 
     private void FirstDataInserted() {
-        myArr.add("خربزه");
-        myArr.add( "موز");
-        myArr.add( "انگور");
-        myArr.add("طالبی");
-        myArr.add( "هندوانه");
-        Collections.shuffle(myArr);
+        myStrings.add("خربزه");
+        myStrings.add("موز");
+        myStrings.add("انگور");
+        myStrings.add("طالبی");
+        myStrings.add("هندوانه");
+        Collections.shuffle(myStrings);
     }
 
     private void FillTextViews() {
         int lens = myArr.size();
         switch (lens) {
             case 3:
-                setTextForMe(t1,myArr.get(0));
+                setTextForMe(t1, myArr.get(0));
                 t2.setVisibility(View.GONE);
-                setTextForMe(t3,myArr.get(1));
-                setTextForMe(t4,myArr.get(2));
+                setTextForMe(t3, myArr.get(1));
+                setTextForMe(t4, myArr.get(2));
                 t5.setVisibility(View.GONE);
                 t6.setVisibility(View.GONE);
                 t7.setVisibility(View.GONE);
                 t8.setVisibility(View.GONE);
 
 
-                hmap.put(1,myArr.get(0));
-                hmap.put(3,myArr.get(1));
-                hmap.put(4,myArr.get(2));
+                hmap.put(1, myArr.get(0));
+                hmap.put(3, myArr.get(1));
+                hmap.put(4, myArr.get(2));
 
                 break;
             case 4:
-                setTextForMe(t1,myArr.get(0));
-                setTextForMe(t2,myArr.get(1));
-                setTextForMe(t3,myArr.get(2));
-                setTextForMe(t4,myArr.get(3));
+                setTextForMe(t1, myArr.get(0));
+                setTextForMe(t2, myArr.get(1));
+                setTextForMe(t3, myArr.get(2));
+                setTextForMe(t4, myArr.get(3));
                 t5.setVisibility(View.GONE);
                 t6.setVisibility(View.GONE);
                 t7.setVisibility(View.GONE);
                 t8.setVisibility(View.GONE);
-                hmap.put(1,myArr.get(0));
-                hmap.put(2,myArr.get(1));
-                hmap.put(3,myArr.get(2));
-                hmap.put(4,myArr.get(3));
+                hmap.put(1, myArr.get(0));
+                hmap.put(2, myArr.get(1));
+                hmap.put(3, myArr.get(2));
+                hmap.put(4, myArr.get(3));
 
                 break;
 
             case 5:
-                setTextForMe(t1,myArr.get(0));
-                setTextForMe(t2,myArr.get(1));
-                setTextForMe(t3,myArr.get(2));
+                setTextForMe(t1, myArr.get(0));
+                setTextForMe(t2, myArr.get(1));
+                setTextForMe(t3, myArr.get(2));
                 t4.setVisibility(View.GONE);
-                setTextForMe(t5,myArr.get(3));
-                setTextForMe(t6,myArr.get(4));
+                setTextForMe(t5, myArr.get(3));
+                setTextForMe(t6, myArr.get(4));
                 t7.setVisibility(View.GONE);
                 t8.setVisibility(View.GONE);
 
-                hmap.put(1,myArr.get(0));
-                hmap.put(2,myArr.get(1));
-                hmap.put(3,myArr.get(2));
-                hmap.put(5,myArr.get(3));
-                hmap.put(6,myArr.get(4));
+                hmap.put(1, myArr.get(0));
+                hmap.put(2, myArr.get(1));
+                hmap.put(3, myArr.get(2));
+                hmap.put(5, myArr.get(3));
+                hmap.put(6, myArr.get(4));
 
                 break;
 
             case 6:
-                setTextForMe(t1,myArr.get(0));
-                setTextForMe(t2,myArr.get(1));
-                setTextForMe(t3,myArr.get(2));
-                setTextForMe(t4,myArr.get(3));
-                setTextForMe(t5,myArr.get(4));
-                setTextForMe(t6,myArr.get(5));
+                setTextForMe(t1, myArr.get(0));
+                setTextForMe(t2, myArr.get(1));
+                setTextForMe(t3, myArr.get(2));
+                setTextForMe(t4, myArr.get(3));
+                setTextForMe(t5, myArr.get(4));
+                setTextForMe(t6, myArr.get(5));
                 t7.setVisibility(View.GONE);
                 t8.setVisibility(View.GONE);
-                hmap.put(1,myArr.get(0));
-                hmap.put(2,myArr.get(1));
-                hmap.put(3,myArr.get(2));
-                hmap.put(4,myArr.get(3));
-                hmap.put(5,myArr.get(4));
-                hmap.put(6,myArr.get(5));
+                hmap.put(1, myArr.get(0));
+                hmap.put(2, myArr.get(1));
+                hmap.put(3, myArr.get(2));
+                hmap.put(4, myArr.get(3));
+                hmap.put(5, myArr.get(4));
+                hmap.put(6, myArr.get(5));
 
                 break;
 
             case 7:
-                setTextForMe(t1,myArr.get(0));
+                setTextForMe(t1, myArr.get(0));
                 t2.setVisibility(View.GONE);
-                setTextForMe(t3,myArr.get(1));
-                setTextForMe(t4,myArr.get(2));
-                setTextForMe(t5,myArr.get(3));
-                setTextForMe(t6,myArr.get(4));
-                setTextForMe(t7,myArr.get(5));
-                setTextForMe(t8,myArr.get(6));
-                hmap.put(1,myArr.get(0));
-                hmap.put(3,myArr.get(1));
-                hmap.put(4,myArr.get(2));
-                hmap.put(5,myArr.get(3));
-                hmap.put(6,myArr.get(4));
-                hmap.put(7,myArr.get(5));
-                hmap.put(8,myArr.get(6));
+                setTextForMe(t3, myArr.get(1));
+                setTextForMe(t4, myArr.get(2));
+                setTextForMe(t5, myArr.get(3));
+                setTextForMe(t6, myArr.get(4));
+                setTextForMe(t7, myArr.get(5));
+                setTextForMe(t8, myArr.get(6));
+                hmap.put(1, myArr.get(0));
+                hmap.put(3, myArr.get(1));
+                hmap.put(4, myArr.get(2));
+                hmap.put(5, myArr.get(3));
+                hmap.put(6, myArr.get(4));
+                hmap.put(7, myArr.get(5));
+                hmap.put(8, myArr.get(6));
 
                 break;
             default:
@@ -206,7 +206,7 @@ public class FatemeFragment extends BaseFragment implements View.OnClickListener
 
     private void FillArray(String s) {
         for (int i = 0; i < s.length(); i++) {
-            myArr.add(s.charAt(i)+"");
+            myArr.add(s.charAt(i) + "");
         }
         Collections.shuffle(myArr);
     }
@@ -230,7 +230,51 @@ public class FatemeFragment extends BaseFragment implements View.OnClickListener
         t8.setOnClickListener(this);
         javab = (TextView) v.findViewById(R.id.javab);
         checkButton = (Button) v.findViewById(R.id.check);
+        checkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                if (myStrings.get(0).equalsIgnoreCase(javab.getText().toString())) {
+                    javab.setText("");
+                    MakeEveryThingVIsible();
+                    MakeEveryThingClickable();
+
+                    myStrings.remove(0);
+                    myArr.clear();
+                    if (myStrings.size() > 0) {
+                        FillArray(myStrings.get(0));
+                        FillTextViews();
+                    } else {
+
+
+                        TruFalseFragment truFalseFragment = TruFalseFragment.newInstance();
+                        ((MainActivity)getActivity()).showFragment(truFalseFragment);
+                    }
+
+                } else if (javab.getText().toString().length() == 0) {
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE).setTitleText("خالی").setContentText("با کلیک روی حروف جواب را انتخاب کنید.")
+                            .setConfirmText("باشه").show();
+                } else {
+                    new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE).setTitleText("اشتباه").setContentText("جواب شما اشتباه است.")
+                            .setConfirmText("باشه").show();
+                    javab.setText("");
+                    MakeEveryThingClickable();
+
+                }
+            }
+        });
+
+    }
+
+    private void MakeEveryThingClickable() {
+        t1.setClickable(true);
+        t2.setClickable(true);
+        t3.setClickable(true);
+        t4.setClickable(true);
+        t5.setClickable(true);
+        t6.setClickable(true);
+        t7.setClickable(true);
+        t8.setClickable(true);
     }
 
 

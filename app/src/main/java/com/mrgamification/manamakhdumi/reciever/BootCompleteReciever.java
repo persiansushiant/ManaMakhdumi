@@ -1,5 +1,6 @@
 package com.mrgamification.manamakhdumi.reciever;
 
+import static com.mrgamification.manamakhdumi.activity.BaseActivity.PrettifyMyTIme;
 import static com.mrgamification.manamakhdumi.activity.BaseActivity.setAlarmForMe;
 
 import android.content.BroadcastReceiver;
@@ -7,8 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 
+import com.mrgamification.manamakhdumi.activity.MainActivity;
 import com.mrgamification.manamakhdumi.activity.SplashActivity;
 import com.mrgamification.manamakhdumi.model.DaruItem;
+import com.mrgamification.manamakhdumi.model.DefferedMana;
 import com.mrgamification.manamakhdumi.model.faramushi;
 
 import java.util.List;
@@ -17,7 +20,11 @@ public class BootCompleteReciever extends BroadcastReceiver {
     Context myContext;
     @Override
     public void onReceive(Context context, Intent intent) {
+
         InitiliazeContext(context);
+        DefferedMana mana = new DefferedMana("mana", "alaki",
+                "phone reboot", "reboot", PrettifyMyTIme(System.currentTimeMillis()+""));
+        mana.save();
         if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             StartForeGround();
             CheckDaru();
@@ -32,6 +39,7 @@ public class BootCompleteReciever extends BroadcastReceiver {
         List<DaruItem> myList = DaruItem.findWithQuery(DaruItem.class,"select * from daru_item");
         for(DaruItem daruItem:myList){
             DoWhateverNeededSoltan(daruItem);
+
         }
 
 
@@ -47,6 +55,8 @@ public class BootCompleteReciever extends BroadcastReceiver {
         daruItem.setNextStop(nextstop+"");
         DaruItem.saveInTx(daruItem);
         setAlarmForMe(myContext,daruItem);
+        DefferedMana mana = new DefferedMana("mana", "alaki", daruItem.getDaruName()+" added after reboot set at"+PrettifyMyTIme(nextstop+""), "reboot", PrettifyMyTIme(System.currentTimeMillis()+""));
+        mana.save();
     }
 
     private void StartForeGround() {
